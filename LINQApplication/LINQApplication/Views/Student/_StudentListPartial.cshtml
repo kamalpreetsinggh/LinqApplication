@@ -1,0 +1,29 @@
+﻿@model IEnumerable<LINQApplication.Models.Student.StudentDetails>
+@{
+    ViewData["Title"] = "_StudentListPartial";
+}
+
+<h2>Student Details</h2>
+<table border="1" align="center" width="100%">
+    <tr style="text-align: center; font-size: large; font-family: Calibri; font-weight:bold">
+        <td>Student ID</td>
+        <td>Student Name</td>
+        <td>Student Class</td>
+        <td>Student Roll No</td>
+        <td>Student Age</td>
+        <td>Student Fees</td>
+        <td>Transaction Date</td>
+    </tr>
+    @foreach (var student in Model)
+    {
+    <tr style="text-align: center; font-size: large; font-family: Calibri">
+        <td>@student.studentID</td>
+        <td>@student.studentName</td>
+        <td>@student.studentClass</td>
+        <td>@student.studentRollNo</td>
+        <td>@student.studentAge</td>
+        <td>@student.studentFees</td>
+        <td>@student.transactionDate</td>
+    </tr>
+    }
+</table>
