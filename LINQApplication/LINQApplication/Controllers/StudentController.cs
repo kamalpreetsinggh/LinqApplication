@@ -42,10 +42,8 @@ namespace LINQApplication.Controllers
             {
                 return PartialView("_StudentListPartial", students);
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
     }
 }

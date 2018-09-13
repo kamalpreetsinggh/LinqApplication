@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,6 @@ namespace LINQApplication.Models.Student
         public string search { get; set; }
         public string orderBy { get; set; }
         public int min { set; get; }
-        public int max { set; get; }
+        public int max { set; get; } = 100000;
     }
 }

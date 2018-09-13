@@ -81,15 +81,15 @@ namespace LINQApplication.Data
 
         public List<StudentDetails> GetStudents(SearchProperties searchProperties)
         {
-            List<Student> studentsList = GetStudentsList();
-            List<Fee> studentsFees = FeeData.GetFeesList();
+            var studentsList = GetStudentsList();
+            var studentsFees = FeeData.GetFeesList();
             var searchResult = (from student in studentsList
                                 join studentFee in studentsFees
                                 on student.studentID equals studentFee.studentID
                                 where ((searchProperties.searchBy == "id" && (searchProperties.search == student.studentID.ToString() || searchProperties.search == null)) ||
-                                (searchProperties.searchBy == "name" && (searchProperties.search == student.studentName) || searchProperties.search==null) ||
-                                (searchProperties.searchBy == "class" && (searchProperties.search == student.studentClass) || searchProperties.search == null)) &&
-                                (studentFee.studentFee >= searchProperties.min && studentFee.studentFee <= searchProperties.max)
+                                (searchProperties.searchBy == "name" && (searchProperties.search == student.studentName || searchProperties.search == null)) ||
+                                (searchProperties.searchBy == "class" && (searchProperties.search == student.studentClass || searchProperties.search == null))) &&
+                                (searchProperties.min <= studentFee.studentFee && searchProperties.max >= studentFee.studentFee)
                                 select new StudentDetails
                                 {
                                     studentID = student.studentID,
@@ -106,23 +106,23 @@ namespace LINQApplication.Data
 
         public List<StudentDetails> OrderBy(List<StudentDetails> studentDetailsList, string orderBy)
         {
-            if (orderBy == "id")
+            switch (orderBy)
             {
-                studentDetailsList = (from student in studentDetailsList
-                                      orderby student.studentID
-                                      select student).ToList();
-            }
-            else if (orderBy == "name")
-            {
-                studentDetailsList = (from student in studentDetailsList
-                                      orderby student.studentName
-                                      select student).ToList();
-            }
-            else if (orderBy == "class")
-            {
-                studentDetailsList = (from student in studentDetailsList
-                                      orderby student.studentClass
-                                      select student).ToList();
+                case "id":
+                    studentDetailsList = (from student in studentDetailsList
+                                          orderby student.studentID
+                                          select student).ToList();
+                    break;
+                case "name":
+                    studentDetailsList = (from student in studentDetailsList
+                                          orderby student.studentName
+                                          select student).ToList();
+                    break;
+                case "class":
+                    studentDetailsList = (from student in studentDetailsList
+                                          orderby student.studentClass
+                                          select student).ToList();
+                    break;
             }
 
             return studentDetailsList;
